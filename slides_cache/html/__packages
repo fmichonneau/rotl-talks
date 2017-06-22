@@ -1,0 +1,11 @@
+base
+BiocInstaller
+devtools
+lookup
+rmarkdown
+rotl
+rgbif
+ggplot2
+maps
+dplyr
+bindrcpp

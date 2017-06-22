@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>rotl</title>
+    <meta charset="utf-8">
+    <meta name="author" content="François Michonneau, Joseph Brown, David Winter" />
+    <link href="libs/remark-css-0.0.1/example.css" rel="stylesheet" />
+    <link rel="stylesheet" href="my-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <code>rotl</code>
+## an R package to access the Open Tree of Life Data
+### François Michonneau, Joseph Brown, David Winter
+### June 23rd, 2017
+
+---
+
+
+
+
+## Where to get the package?
+
+
+```r
+## Release version
+install.pacakges("rotl")
+## Development version
+source("https://install-github.me/ropensci/rotl")
+```
+
+Load the package
+
+
+```r
+library(rotl)
+```
+
+---
+
+## How to get a tree from a list of species?
+
+### Step 1: match the names to the OTT ids
+
+
+```r
+taxa &lt;- tnrs_match_names(names =
+            c("Chlamydomonas reinhardtii",
+              "Drosophila melanogaster", "Arabidopsis thaliana",
+               "Rattus norvegicus", "Mus musculus",
+               "Cavia porcellus", "Xenopus laevis",
+               "Saccharomyces cervisae", "Danio rerio"))
+head(taxa, 2)
+```
+
+```
+##               search_string               unique_name approximate_match
+## 1 chlamydomonas reinhardtii Chlamydomonas reinhardtii             FALSE
+## 2   drosophila melanogaster   Drosophila melanogaster             FALSE
+##   ott_id is_synonym flags number_matches
+## 1  33153      FALSE                    1
+## 2 505714      FALSE                    1
+```
+
+---
+
+## How to get a tree from a list of species?
+
+### Step 2: plot the tre
+
+
+
+```r
+tr &lt;- tol_induced_subtree(ott_id(taxa))
+plot(tr)
+```
+
+![](slides_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+
+---
+
+## How to get taxonomic information?
+
+
+```r
+mono &lt;- tnrs_match_names("monotremata")
+mono_tr &lt;- taxonomy_subtree(ott_id(mono), output_format = "phylo")
+plot(mono_tr)
+```
+
+![](slides_files/figure-html/mono-1.png)&lt;!-- --&gt;
+
+---
+
+## How to get taxonomic information?
+
+
+```r
+mono %&gt;%
+    ott_id() %&gt;%
+    tol_node_info(include_lineage = TRUE) %&gt;%
+    tax_lineage() %&gt;%
+    filter(rank != "no rank") %&gt;%
+    select(- unique_name)
+```
+
+```
+##         rank          name ott_id
+## 1      class      Mammalia 244265
+## 2 superclass     Tetrapoda 229562
+## 3      class Sarcopterygii 458402
+## 4 superclass Gnathostomata 278114
+## 5  subphylum    Vertebrata 801601
+## 6  subphylum      Craniata 947318
+## 7     phylum      Chordata 125642
+## 8    kingdom       Metazoa 691846
+## 9     domain     Eukaryota 304358
+```
+
+---
+
+## How to get trees from published studies?
+
+
+```r
+cat_studies &lt;- studies_find_studies(
+    property = "ot:focalCladeOTTTaxonName",
+    value = "Felidae", exact = TRUE)
+cat_studies
+```
+
+```
+##   study_ids n_trees tree_ids candidate study_year
+## 1   pg_1981       1 tree4052  tree4052       2006
+##                                                                title
+## 1 The late Miocene radiation of modern Felidae: a genetic assessment
+##                                   study_doi
+## 1 http://dx.doi.org/10.1126/science.1122277
+```
+
+```r
+cat_tree &lt;- get_study_tree("pg_1981", tree_id = "tree4052")
+```
+
+---
+
+## The tree
+
+.pull-left[
+
+```r
+plot(cat_tree, cex = .8, no.margin = TRUE)
+```
+
+![](slides_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+&lt;img src="orig_tree.png" width="2640" /&gt;
+Figure from the original paper (Johnson et 2006)
+]
+---
+
+## Link to other data sources
+
+
+
+.pull-left[
+![](slides_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+]
+
+
+.pull-right[
+![](slides_files/figure-html/lynx-tree-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## Where to learn more about `rotl`?
+
+* the `rotl` manuscript: &lt;https://doi.org/10.1111/2041-210X.12593&gt;
+* The vignettes in the `rotl` package
+  - How to use `rotl`?
+  - Using the Open Tree synthesis in a comparative analysis
+  - Connecting data to Open Tree trees
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
