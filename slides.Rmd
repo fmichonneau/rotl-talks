@@ -2,7 +2,7 @@
 title: "`rotl`"
 subtitle: "an R package to access the Open Tree of Life Data"
 author: "François Michonneau, Joseph Brown, David Winter"
-date: "June 23rd, 2017"
+date: "June 23rd, 2017 -- @fmic_"
 output:
   xaringan::moon_reader:
     css: [default, my-fonts.css]
@@ -227,3 +227,7 @@ plot(lynx_tr, tip.color = tip_col[lynx_tr$tip.label], cex = 1.2)
 
   - ruby: https://github.com/SpeciesFileGroup/bark
   - python: https://github.com/OpenTreeOfLife/pyopentree
+
+* Open issues:
+
+  - https://github.com/ropensci/rotl
