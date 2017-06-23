@@ -41,6 +41,11 @@ unified tree with 2.3 million tips
 
   - https://cran.r-project.org/web/views/Phylogenetics.html
 
+* rOpenSci packages to interact with public data
+
+```{r, echo=FALSE}
+knitr::include_graphics("ropensci.svg")
+```
 
 ---
 
@@ -79,7 +84,7 @@ head(taxa, 2)
 
 ## How to get a tree from a list of species?
 
-### Step 2: plot the tre
+### Step 2: plot the tree
 
 
 ```{r, fig.height=6}
