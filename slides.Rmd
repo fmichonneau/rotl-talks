@@ -54,7 +54,7 @@ knitr::include_graphics("ropensci.svg")
 
 ```{r install, echo=TRUE, eval=FALSE}
 ## Release version
-install.pacakges("rotl")
+install.packages("rotl")
 ## Development version
 source("https://install-github.me/ropensci/rotl")
 ```
