@@ -17,9 +17,29 @@ output:
 library(dplyr)
 ```
 
+## Everybody wants trees
+
+* Easier to build accurate trees
+* Better methods to use them
+* Difficult to get tree for arbitrary species
+
 ---
 
+## Open Tree of Life
 
+```{r, echo=FALSE}
+knitr::include_graphics("ott.jpg")
+```
+
+unified tree with 2.3 million tips
+
+---
+
+## R and its ecosystem
+
+* 30+ packages to work with phylogenies and associated data:
+
+  - https://cran.r-project.org/web/views/Phylogenetics.html
 
 
 ---
